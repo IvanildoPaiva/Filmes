@@ -1,19 +1,13 @@
-import Home from './src/Home';
-import Filmes from './src/Services/Filmes'
-
-
+import Home from "./src/Home";
+import Filmes from "./src/Services/Filmes";
 
 const App = () => {
-  return(
+  return (
     <>
-    <Home />
-    <Filmes />
-    
-    
+      <Home />
+      <Filmes />
     </>
-   
   );
-
-}
+};
 
 export default App;

@@ -1,54 +1,42 @@
-import React, {useState, useEffect} from 'react';
-import {Button, Image, FlatList, View, Text} from 'react-native';
-import  {Container, TotalMoviesText} from '../styles/style';
+import React, { useState, useEffect } from "react";
+import { Button, Image, FlatList, View, Text } from "react-native";
+import {
+  Container,
+  TotalMoviesText,
+  Lista,
+  MoviesImage,
+  MoviesItem,
+  MovieTitle,
+} from "../styles/style";
 
+const Filmes = () => {
+  const [movies, setMovies] = useState([]);
 
+  const handleLoadButton = async () => {
+    const req = await fetch("https://api.b7web.com.br/cinema/");
+    const json = await req.json();
 
-
-
-const Filmes = () =>{
-
-    const [movies, setMovies] = useState([]);
-    
-
-    const handleLoadButton = async () =>{
-
-        const req = await fetch ("https://api.b7web.com.br/cinema/");
-        const json = await req.json();
-        
-        if(json){
-            setMovies(json)
-
-
-        }
-        
+    if (json) {
+      setMovies(json);
     }
+  };
 
-return(
-
+  return (
     <Container>
-        
-        <Button title="Carregar Filmes" onPress={handleLoadButton}/>
-        <TotalMoviesText>Total de Filmes: {movies.length}</TotalMoviesText>
+      <Button title="Carregar Filmes" onPress={handleLoadButton} />
+      <TotalMoviesText>Total de Filmes: {movies.length}</TotalMoviesText>
 
-        <FlatList 
-        
+      <Lista
         data={movies}
-        renderItem={({item})=> (
-         
-             <View>
-                 <Image source={{uri:item.avatar}} style={{width:200, height:200}}/>
-                <Text>{item.titulo}</Text> 
-                
-             </View>
-
+        renderItem={({ item }) => (
+          <MoviesItem>
+            <MoviesImage source={{ uri: item.avatar }} resizeMode="contain" />
+            <MovieTitle>{item.titulo}</MovieTitle>
+          </MoviesItem>
         )}
-        keyExtractor={item => item.titulo}
-
-        />
-
+        keyExtractor={(item) => item.titulo}
+      />
     </Container>
-);
-
-}  
- export default Filmes;
+  );
+};
+export default Filmes;
